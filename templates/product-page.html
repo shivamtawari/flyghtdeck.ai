@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
-    <title>Product - Brand</title>
+    <title>Menu - flyghtdeck.ai</title>
     <link rel="apple-touch-icon" type="image/jpeg" sizes="180x180" href="static/img/favicon/favicon_180.jpg">
     <link rel="icon" type="image/jpeg" sizes="16x16" href="static/img/favicon/favicon_16.jpg">
     <link rel="icon" type="image/jpeg" sizes="32x32" href="static/img/favicon/favicon_32.jpg">
@@ -36,8 +36,14 @@
 <body>
     <nav class="navbar navbar-light navbar-expand-lg fixed-top bg-white clean-navbar" style="background: var(--bs-white);padding-top: 15px;padding-bottom: 15px;margin-left: -10%;margin-right: -10%;">
         <div class="container">
-            <a class="navbar-brand logo" href="index.html" style="padding: 0px;color: var(--bs-indigo);font-family: Montserrat, sans-serif;">flyghtdeck.ai</a><button data-bs-toggle="collapse" class="navbar-toggler" data-bs-target="#navcol-1"><span class="visually-hidden">Toggle navigation</span><span class="navbar-toggler-icon"></span></button>
+            <a class="navbar-brand logo" href="{{ url_for('index') }}" style="padding: 0px;color: var(--bs-indigo);font-family: Montserrat, sans-serif;">flyghtdeck.ai</a><button data-bs-toggle="collapse" class="navbar-toggler" data-bs-target="#navcol-1"><span class="visually-hidden">Toggle navigation</span><span class="navbar-toggler-icon"></span></button>
+            {% if userType=='admin' %}
+            <div class="collapse navbar-collapse" id="navcol-1" style="padding-top: 1%;margin-top: -5%;margin-bottom: -5%;margin-left: 40%;margin-right: -5%;">
+            {% elif userType=='user' %}
+            <div class="collapse navbar-collapse" id="navcol-1" style="padding-top: 1%;margin-top: -5%;margin-bottom: -5%;margin-left: 25%;margin-right: -10%;">
+            {% else %}
             <div class="collapse navbar-collapse" id="navcol-1" style="padding-top: 1%;margin-top: -5%;margin-bottom: -5%;margin-left: 25%;margin-right: -5%;">
+            {% endif %}
                 <ul class="navbar-nav ms-auto">
                     <li class="nav-item"><a class="nav-link" href="{{ url_for('index') }}">Home</a></li>
                     <li class="nav-item"><a class="nav-link active" href="{{ url_for('shop_and_dine') }}">Shop &amp; Dine</a></li>
@@ -52,12 +58,16 @@
                     {% else %}
                     <li class="nav-item dropdown no-arrow" style="margin-top: -2%;">
                         <div class="nav-item dropdown no-arrow" style="padding: 0px;">
-                            <a class="dropdown-toggle nav-link" aria-expanded="false" data-bs-toggle="dropdown" href="#"><span class="d-none d-lg-inline me-2 text-gray-600 small">Valerie Luna</span><img class="border rounded-circle img-profile" src="static/img/avatars/avatar1.jpeg" style="width: 30%;height: 30%;"></a>
+                            <a class="dropdown-toggle nav-link" aria-expanded="false" data-bs-toggle="dropdown" href="#">
+                                <span class="d-none d-lg-inline me-2 text-gray-600 small">Valerie Luna</span>
+                                <img class="border rounded-circle img-profile" src="static/img/avatars/avatar1.jpeg" style="width: 25%;height: 25%;">
+                            </a>
                             <div class="dropdown-menu shadow dropdown-menu-end animated--grow-in">
                                 {% if userType=='admin' %}
                                 <a class="dropdown-item" href="{{ url_for('dashboard') }}"><i class="fas fa-chevron-right fa-sm fa-fw me-2 text-gray-400"></i>&nbsp;Dashboard</a>
+                                <div class="dropdown-divider"></div>
                                 {% endif %}
-                                <div class="dropdown-divider"></div><a class="dropdown-item" href="{{ url_for('logout') }}"><i class="fas fa-sign-out-alt fa-sm fa-fw me-2 text-gray-400"></i>&nbsp;Logout</a>
+                                <a class="dropdown-item" href="{{ url_for('logout') }}"><i class="fas fa-sign-out-alt fa-sm fa-fw me-2 text-gray-400"></i>&nbsp;Logout</a>
                             </div>
                         </div>
                     </li>
@@ -88,37 +98,45 @@
         <section class="clean-block clean-product dark">
             <div class="container">
                 <div class="block-heading">
-                    <h2 class="text-info">Restaurant Name</h2>
+                    <h2 class="text-info">{{ restaurant }}</h2>
                 </div>
             </div>
             <div>
+                {% for item in menu %}
                 <div class="cont_principal" style="padding-top: 10%;padding-bottom: 10%;background: transparent;">
                     <div class="cont_modal cont_modal_active">
                         <div class="cont_photo">
-                            <div class="cont_img_back"><img src="static/img/57989f2a2e186e38bf93429aa395120c.jpg"></div>
+                            <div class="cont_img_back"><img src="{{ item[5] }}"></div>
                             <div class="cont_mins">
                                 <div class="sub_mins">
-                                    <h3>50</h3><span>MINS</span>
+                                    <h3>{{ item[3] }}</h3><span>MINS</span>
                                 </div>
                                 <div class="cont_icon_right">
                                     <p class="border rounded border-danger" style="color: var(--bs-white);font-weight: bold;background: rgb(237,36,96,0.8);font-size: 14px;">&nbsp;<i class="fas fa-star"></i>&nbsp;Recommended For You&nbsp;</p>
                                 </div>
                             </div>
                             <div class="cont_servings">
-                                <h3>4</h3><span>SERVINGS</span>
+                                <h3>{{ item[4] }}</h3><span>SERVINGS</span>
                             </div>
                             <div class="cont_detalles">
-                                <h3>Lorem With Feta</h3>
-                                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam sagittis est est aliquam, sed faucibus massa lobortis. Maecenas non est justo.</p>
+                                <h3>{{ item[1] }}</h3>
+                                <p>{{ item[6] }}</p>
                             </div>
                         </div>
                         <div class="cont_text_ingredients">
                             <div class="cont_over_hidden">
                                 <div class="cont_tabs">
                                     <ul class="d-inline-flex flex-fill" style="background: transparent;">
-                                        <li><a href="#">
+                                        <li>
+                                            <a href="#">
                                                 <h4>PLACE ORDER</h4>
-                                            </a></li>
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="#">
+                                                <h4><b>PRICE: {{ item[2] }}</b></h4>
+                                            </a>
+                                        </li>
                                     </ul>
                                 </div>
                                 <div class="cont_text_det_preparation">
@@ -130,7 +148,13 @@
                                     </div>
                                     <div class="cont_text_det_preparation">
                                         <div class="cont_title_preparation">
-                                            <p>Order Quantity</p><input class="form-control-sm" type="number" value="0" min="0" max="10" step="1"><button class="btn btn-dark border rounded-pill shadow" type="submit" style="margin-left: 5%;font-size: 14px;background: rgb(237,36,96);">Add to Cart&nbsp;<i class="fa fa-chevron-right"></i></button>
+                                            <p>Order Quantity</p>
+                                            <input class="form-control-sm" type="number" value="0" min="0" max="10" step="1">
+                                            {% if userType=='guest' %}
+                                            <button class="btn btn-dark disabled border rounded-pill shadow" type="submit" style="margin-left: 5%;font-size: 14px;background: rgb(237,36,96);">Add to Cart <i class="fa fa-chevron-right"></i></button>
+                                            {% else %}
+                                            <a class="btn btn-dark border rounded-pill shadow" type="link" href="{{ item[1]+'_'+item[2] }}" style="margin-left: 5%;font-size: 14px;background: rgb(237,36,96);">Order Now&nbsp;<i class="fa fa-chevron-right"></i></a>
+                                            {% endif %}
                                         </div>
                                         <div class="cont_info_preparation"></div>
                                     </div>
@@ -139,6 +163,7 @@
                         </div>
                     </div>
                 </div>
+                {% endfor %}
             </div>
         </section>
     </main>

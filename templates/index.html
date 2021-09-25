@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
-    <title>Home - Brand</title>
+    <title>Home - flyghtdeck.ai</title>
     <link rel="apple-touch-icon" type="image/jpeg" sizes="180x180" href="static/img/favicon/favicon_180.jpg">
     <link rel="icon" type="image/jpeg" sizes="16x16" href="static/img/favicon/favicon_16.jpg">
     <link rel="icon" type="image/jpeg" sizes="32x32" href="static/img/favicon/favicon_32.jpg">
@@ -35,53 +35,64 @@
 
 <body>
     <nav class="navbar navbar-light navbar-expand-lg fixed-top bg-white clean-navbar" style="background: var(--bs-white);padding-top: 15px;padding-bottom: 15px;margin-left: -10%;margin-right: -10%;">
-        <div class="container"><a class="navbar-brand logo" href="index.html" style="padding: 0px;color: var(--bs-indigo);font-family: Montserrat, sans-serif;">flyghtdeck.ai</a><button data-bs-toggle="collapse" class="navbar-toggler" data-bs-target="#navcol-1"><span class="visually-hidden">Toggle navigation</span><span class="navbar-toggler-icon"></span></button>
-            <div class="collapse navbar-collapse" id="navcol-1" style="padding-top: 1%;margin-top: -5%;margin-bottom: -5%;margin-left: 25%;margin-right: -5%;">
-                <ul class="navbar-nav ms-auto">
-                    <li class="nav-item"><a class="nav-link active" href="{{ url_for('index') }}">Home</a></li>
-                    <li class="nav-item"><a class="nav-link" href="{{ url_for('shop_and_dine') }}">Shop &amp; Dine</a></li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ url_for('cart') }}">
-                            <p><i class="fas fa-shopping-cart"></i>&nbsp;Cart</p>
-                        </a>
-                    </li>
-                    {% if userType=='guest' %}
-                    <li class="nav-item"><a class="nav-link" href="{{ url_for('login') }}">Login</a></li>
-                    <li class="nav-item"><a class="nav-link" href="{{ url_for('signup') }}" style="font-family: var(--bs-body-font-family);">Register</a></li>
+        <div class="container">
+            <a class="navbar-brand logo" href="#" style="padding: 0px;color: var(--bs-indigo);font-family: Montserrat, sans-serif;">flyghtdeck.ai</a><button data-bs-toggle="collapse" class="navbar-toggler" data-bs-target="#navcol-1"><span class="visually-hidden">Toggle navigation</span><span class="navbar-toggler-icon"></span></button>
+            {% if userType=='admin' %}
+            <div class="collapse navbar-collapse" id="navcol-1" style="padding-top: 1%;margin-top: -5%;margin-bottom: -5%;margin-left: 40%;margin-right: -5%;">
+                {% elif userType=='user' %}
+                <div class="collapse navbar-collapse" id="navcol-1" style="padding-top: 1%;margin-top: -5%;margin-bottom: -5%;margin-left: 25%;margin-right: -10%;">
                     {% else %}
-                    <li class="nav-item dropdown no-arrow" style="margin-top: -2%;">
-                        <div class="nav-item dropdown no-arrow" style="padding: 0px;">
-                            <a class="dropdown-toggle nav-link" aria-expanded="false" data-bs-toggle="dropdown" href="#"><span class="d-none d-lg-inline me-2 text-gray-600 small">Valerie Luna</span><img class="border rounded-circle img-profile" src="static/img/avatars/avatar1.jpeg" style="width: 30%;height: 30%;"></a>
-                            <div class="dropdown-menu shadow dropdown-menu-end animated--grow-in">
-                                {% if userType=='admin' %}
-                                <a class="dropdown-item" href="{{ url_for('dashboard') }}"><i class="fas fa-chevron-right fa-sm fa-fw me-2 text-gray-400"></i>&nbsp;Dashboard</a>
-                                {% endif %}
-                                <div class="dropdown-divider"></div><a class="dropdown-item" href="{{ url_for('logout') }}"><i class="fas fa-sign-out-alt fa-sm fa-fw me-2 text-gray-400"></i>&nbsp;Logout</a>
-                            </div>
-                        </div>
-                    </li>
-                    {% endif %}
-                    {% if not(userType=='admin') %}
-                    <li class="nav-item">
-                        <div class="nav-item dropdown" style="margin-top: 2px;">
-                            <a class="dropdown-toggle text-uppercase border rounded" aria-expanded="false" data-bs-toggle="dropdown" href="#" style="background: linear-gradient(145deg, rgb(11,116,176), rgb(117,71,156) 50%, rgb(189,56,97));color: var(--bs-white);text-align: center;font-size: 13px;padding: 8px;margin: 2px;">Change City&nbsp;</a>
-                            <div class="dropdown-menu">
-                                <a class="dropdown-item" href="{{ url_for('change_to_mumbai') }}">Mumbai</a>
-                                <a class="dropdown-item" href="{{ url_for('change_to_lucknow') }}">Lucknow</a>
-                                <a class="dropdown-item" href="{{ url_for('change_to_ahmedabad') }}">Ahmedabad<br></a>
-                                <a class="dropdown-item" href="{{ url_for('change_to_mangaluru') }}">Mangaluru</a>
-                                <a class="dropdown-item" href="{{ url_for('change_to_jaipur') }}">Jaipur</a>
-                                <a class="dropdown-item" href="{{ url_for('change_to_guwahati') }}">Guwahati</a>
-                            </div>
-                        </div>
-                        <ul class="navbar-nav flex-nowrap ms-auto">
-                            <div class="d-none d-sm-block topbar-divider"></div>
+                    <div class="collapse navbar-collapse" id="navcol-1" style="padding-top: 1%;margin-top: -5%;margin-bottom: -5%;margin-left: 25%;margin-right: -5%;">
+                        {% endif %}
+                        <ul class="navbar-nav ms-auto">
+                            <li class="nav-item"><a class="nav-link active" href="{{ url_for('index') }}">Home</a></li>
+                            <li class="nav-item"><a class="nav-link" href="{{ url_for('shop_and_dine') }}">Shop &amp; Dine</a></li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ url_for('cart') }}">
+                                    <p><i class="fas fa-shopping-cart"></i>&nbsp;Cart</p>
+                                </a>
+                            </li>
+                            {% if userType=='guest' %}
+                            <li class="nav-item"><a class="nav-link" href="{{ url_for('login') }}">Login</a></li>
+                            <li class="nav-item"><a class="nav-link" href="{{ url_for('signup') }}" style="font-family: var(--bs-body-font-family);">Register</a></li>
+                            {% else %}
+                            <li class="nav-item dropdown no-arrow" style="margin-top: -2%;">
+                                <div class="nav-item dropdown no-arrow" style="padding: 0px;">
+                                    <a class="dropdown-toggle nav-link" aria-expanded="false" data-bs-toggle="dropdown" href="#">
+                                        <span class="d-none d-lg-inline me-2 text-gray-600 small">Valerie Luna</span>
+                                        <img class="border rounded-circle img-profile" src="static/img/avatars/avatar1.jpeg" style="width: 25%;height: 25%;">
+                                    </a>
+                                    <div class="dropdown-menu shadow dropdown-menu-end animated--grow-in">
+                                        {% if userType=='admin' %}
+                                        <a class="dropdown-item" href="{{ url_for('dashboard') }}"><i class="fas fa-chevron-right fa-sm fa-fw me-2 text-gray-400"></i>&nbsp;Dashboard</a>
+                                        <div class="dropdown-divider"></div>
+                                        {% endif %}
+                                        <a class="dropdown-item" href="{{ url_for('logout') }}"><i class="fas fa-sign-out-alt fa-sm fa-fw me-2 text-gray-400"></i>&nbsp;Logout</a>
+                                    </div>
+                                </div>
+                            </li>
+                            {% endif %}
+                            {% if not(userType=='admin') %}
+                            <li class="nav-item">
+                                <div class="nav-item dropdown" style="margin-top: 2px;">
+                                    <a class="dropdown-toggle text-uppercase border rounded" aria-expanded="false" data-bs-toggle="dropdown" href="#" style="background: linear-gradient(145deg, rgb(11,116,176), rgb(117,71,156) 50%, rgb(189,56,97));color: var(--bs-white);text-align: center;font-size: 13px;padding: 8px;margin: 2px;">Change City&nbsp;</a>
+                                    <div class="dropdown-menu">
+                                        <a class="dropdown-item" href="{{ url_for('change_to_mumbai') }}">Mumbai</a>
+                                        <a class="dropdown-item" href="{{ url_for('change_to_lucknow') }}">Lucknow</a>
+                                        <a class="dropdown-item" href="{{ url_for('change_to_ahmedabad') }}">Ahmedabad<br></a>
+                                        <a class="dropdown-item" href="{{ url_for('change_to_mangaluru') }}">Mangaluru</a>
+                                        <a class="dropdown-item" href="{{ url_for('change_to_jaipur') }}">Jaipur</a>
+                                        <a class="dropdown-item" href="{{ url_for('change_to_guwahati') }}">Guwahati</a>
+                                    </div>
+                                </div>
+                                <ul class="navbar-nav flex-nowrap ms-auto">
+                                    <div class="d-none d-sm-block topbar-divider"></div>
+                                </ul>
+                            </li>
+                            {% endif %}
                         </ul>
-                    </li>
-                    {% endif %}
-                </ul>
-            </div>
-        </div>
+                    </div>
+                </div>
     </nav>
     <main class="page landing-page">
         <div class="carousel slide carousel-fade" data-bs-ride="carousel" data-bs-interval="4000" data-bs-pause="false" id="carousel-1" style="margin-top: -2%;width: 100%;height: 575px;">
@@ -126,24 +137,28 @@
             <div class="container">
                 <div class="row">
                     <div class="col-sm-auto col-md-auto" style="padding-right: 1%;padding-left: 1%;">
-                        <div class="shadow-lg box"><img class="border rounded" src="static/img/feedback.jpg" alt="Desmond">
+                        <div class="shadow-lg box">
+                            <img class="border rounded" src="static/img/feedback.jpg" alt="Desmond">
                             <div class="border rounded box-heading" style="background: linear-gradient(45deg, rgba(11,116,176,0.6), rgba(117,71,156,0.8) 50%, rgba(189,56,97,0.9)), rgb(213,20,80,0.7);border-style: none;">
                                 <h4 class="title" style="color: var(--bs-gray-100);">Feedback?</h4><span class="post" style="color: var(--bs-white);">Fill Out a quick form</span>
                             </div>
                             <div class="shadow-lg boxContent" style="background: linear-gradient(45deg, rgba(11,116,176,0.6), rgba(117,71,156,0.8) 50%, rgb(213,20,80,0.7)), rgb(213,20,80,0.7);">
-                                <p class="description" style="color: var(--bs-white);margin-top: 40%;font-size: 18px;">Your feedback is valuable to us<br>
+                                <p class="description" style="color: var(--bs-white);margin-top: 40%;font-size: 18px;">
+                                    Your feedback is valuable to us<br>
                                     <a class="read" href="{{ url_for('feedback') }}" style="color: var(--bs-white);">Give Feedback<i class="fa fa-angle-right"></i></a>
                                 </p>
                             </div>
                         </div>
                     </div>
                     <div class="col-sm-auto col-md-auto" style="padding-right: 1%;padding-left: 1%;">
-                        <div class="shadow-lg box"><img class="border rounded" src="static/img/suspicious.jpg" alt="Desmond">
+                        <div class="shadow-lg box">
+                            <img class="border rounded" src="static/img/suspicious.jpg" alt="Desmond">
                             <div class="border rounded box-heading" style="background: linear-gradient(45deg, rgba(11,116,176,0.6), rgba(117,71,156,0.8) 50%, rgba(189,56,97,0.9)), rgb(213,20,80,0.7);border-style: none;">
                                 <h4 class="title" style="color: var(--bs-gray-100);">Found Something Suspicious?</h4><span class="post" style="color: var(--bs-white);">Report Us</span>
                             </div>
                             <div class="shadow-lg boxContent" style="background: linear-gradient(45deg, rgba(11,116,176,0.6), rgba(117,71,156,0.8) 50%, rgb(213,20,80,0.7)), rgb(213,20,80,0.7);">
-                                <p class="description" style="color: var(--bs-white);margin-top: 40%;font-size: 18px;">Fill a quick form for suspicious activities<br>
+                                <p class="description" style="color: var(--bs-white);margin-top: 40%;font-size: 18px;">
+                                    Fill a quick form for suspicious activities<br>
                                     <a class="read" href="{{ url_for('suspicion') }}" style="color: var(--bs-white);">Report us<i class="fa fa-angle-right"></i></a>
                                 </p>
                             </div>
@@ -153,6 +168,12 @@
             </div>
         </section>
     </main>
+    <script src="https://github.com/Cognigy/WebchatWidget/releases/latest/download/webchat.js"></script>
+    <script>
+        initWebchat(
+            "https://endpoint-trial.cognigy.ai/26db73d9aabd077e27c6f82668952dfe7125dcfc2d5b4ab52704417ce477a4f9"
+        );
+    </script>
     <footer class="page-footer dark">
         <div class="container" style="text-align: left;">
             <div class="row" style="margin-left: 0px;margin-right: -5%;">

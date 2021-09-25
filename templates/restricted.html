@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
-    <title>Shopping Cart - Brand</title>
+    <title>Login to view - flyghtdeck.ai</title>
     <link rel="apple-touch-icon" type="image/jpeg" sizes="180x180" href="static/img/favicon/favicon_180.jpg">
     <link rel="icon" type="image/jpeg" sizes="16x16" href="static/img/favicon/favicon_16.jpg">
     <link rel="icon" type="image/jpeg" sizes="32x32" href="static/img/favicon/favicon_32.jpg">
@@ -36,8 +36,14 @@
 <body>
     <nav class="navbar navbar-light navbar-expand-lg fixed-top bg-white clean-navbar" style="background: var(--bs-white);padding-top: 15px;padding-bottom: 15px;margin-left: -10%;margin-right: -10%;">
         <div class="container">
-            <a class="navbar-brand logo" href="index.html" style="padding: 0px;color: var(--bs-indigo);font-family: Montserrat, sans-serif;">flyghtdeck.ai</a><button data-bs-toggle="collapse" class="navbar-toggler" data-bs-target="#navcol-1"><span class="visually-hidden">Toggle navigation</span><span class="navbar-toggler-icon"></span></button>
+            <a class="navbar-brand logo" href="{{ url_for('index') }}" style="padding: 0px;color: var(--bs-indigo);font-family: Montserrat, sans-serif;">flyghtdeck.ai</a><button data-bs-toggle="collapse" class="navbar-toggler" data-bs-target="#navcol-1"><span class="visually-hidden">Toggle navigation</span><span class="navbar-toggler-icon"></span></button>
+            {% if userType=='admin' %}
+            <div class="collapse navbar-collapse" id="navcol-1" style="padding-top: 1%;margin-top: -5%;margin-bottom: -5%;margin-left: 40%;margin-right: -5%;">
+            {% elif userType=='user' %}
+            <div class="collapse navbar-collapse" id="navcol-1" style="padding-top: 1%;margin-top: -5%;margin-bottom: -5%;margin-left: 25%;margin-right: -10%;">
+            {% else %}
             <div class="collapse navbar-collapse" id="navcol-1" style="padding-top: 1%;margin-top: -5%;margin-bottom: -5%;margin-left: 25%;margin-right: -5%;">
+            {% endif %}
                 <ul class="navbar-nav ms-auto">
                     <li class="nav-item"><a class="nav-link" href="{{ url_for('index') }}">Home</a></li>
                     <li class="nav-item"><a class="nav-link" href="{{ url_for('shop_and_dine') }}">Shop &amp; Dine</a></li>
@@ -52,12 +58,16 @@
                     {% else %}
                     <li class="nav-item dropdown no-arrow" style="margin-top: -2%;">
                         <div class="nav-item dropdown no-arrow" style="padding: 0px;">
-                            <a class="dropdown-toggle nav-link" aria-expanded="false" data-bs-toggle="dropdown" href="#"><span class="d-none d-lg-inline me-2 text-gray-600 small">Valerie Luna</span><img class="border rounded-circle img-profile" src="static/img/avatars/avatar1.jpeg" style="width: 30%;height: 30%;"></a>
+                            <a class="dropdown-toggle nav-link" aria-expanded="false" data-bs-toggle="dropdown" href="#">
+                                <span class="d-none d-lg-inline me-2 text-gray-600 small">Valerie Luna</span>
+                                <img class="border rounded-circle img-profile" src="static/img/avatars/avatar1.jpeg" style="width: 25%;height: 25%;">
+                            </a>
                             <div class="dropdown-menu shadow dropdown-menu-end animated--grow-in">
                                 {% if userType=='admin' %}
                                 <a class="dropdown-item" href="{{ url_for('dashboard') }}"><i class="fas fa-chevron-right fa-sm fa-fw me-2 text-gray-400"></i>&nbsp;Dashboard</a>
+                                <div class="dropdown-divider"></div>
                                 {% endif %}
-                                <div class="dropdown-divider"></div><a class="dropdown-item" href="{{ url_for('logout') }}"><i class="fas fa-sign-out-alt fa-sm fa-fw me-2 text-gray-400"></i>&nbsp;Logout</a>
+                                <a class="dropdown-item" href="{{ url_for('logout') }}"><i class="fas fa-sign-out-alt fa-sm fa-fw me-2 text-gray-400"></i>&nbsp;Logout</a>
                             </div>
                         </div>
                     </li>
