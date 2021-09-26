@@ -1,18 +1,24 @@
 import os
 from flask import Flask, request, redirect, render_template
 from multi_city import HandleCity
+from recommendation import RecommendationEngine
 
 
-userType = 'user'          # guest / user / admin
+userType = 'guest'          # guest / user / admin
 ## Login ::Temporary for prototype::
 registered = {'admin.mumbai@adaniair.com':'admin.mumbai',
-              'test.user@email.com': 'test.user'}
+              'test.user1@email.com': 'test.user1',
+              'test.user2@email.com': 'test.user2'}
+loggedIn = None
+history = {'test.user1@email.com': [],
+           'test.user2@email.com': ['Cheese Melt Paneer Wrap', 'Malted Chocolate Fudge Ice cream'],
+           }
 city = 'mumbai'
 
 
 app = Flask(__name__)
 city_handler = HandleCity(city)
-
+recommender = RecommendationEngine()
 
 def reset_global():
     global userType
@@ -50,6 +56,7 @@ def cart():
 def login():
     global userType
     global city
+    global loggedIn
 
     email = request.form.get("email")
     password = request.form.get("password")
@@ -60,6 +67,7 @@ def login():
                 userType = 'admin'
             else:
                 userType = 'user'
+            loggedIn = email
             return redirect("/")
     ## Wrong EmailId or Pass
     return render_template('login.html', userType=userType, city=city)
@@ -111,13 +119,38 @@ def dashboard():
 
     return render_template('dashboard-admin.html', userType=userType)
 
+
+def minus(lst1, lst2):
+    lst3 = [value for value in lst1 if value not in lst2]
+    return lst3
+
 @app.route('/menu',  methods=['GET', 'POST'])
 def menu(restaurant=None):
     global userType
     global city
 
     menu = city_handler.get_menu(restaurant)
-    return render_template('product-page.html', userType=userType, city=city, restaurant=restaurant, menu=menu)
+    recommended = []
+    if loggedIn:
+        hist = history[loggedIn]
+        print(hist)
+        if len(hist)==0:
+            recommended = city_handler.get_bestsellers(restaurant)
+        else:
+            product = []
+            for item in hist:
+                for detailed_item in menu:
+                    if item in detailed_item:
+                        product.append(detailed_item)
+            
+            recommended = recommender.get_similarity(product[-1], menu, num=2)
+            print(recommended)
+    else:
+        recommended = []
+
+    menu = minus(menu, recommended)
+    
+    return render_template('product-page.html', userType=userType, city=city, restaurant=restaurant, menu=menu, recommended=recommended)
 
 @app.route('/mumbai')
 def change_to_mumbai():
