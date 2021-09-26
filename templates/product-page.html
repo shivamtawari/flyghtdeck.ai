@@ -102,7 +102,7 @@
                 </div>
             </div>
             <div>
-                {% for item in menu %}
+                {% for item in recommended %}
                 <div class="cont_principal" style="padding-top: 10%;padding-bottom: 10%;background: transparent;">
                     <div class="cont_modal cont_modal_active">
                         <div class="cont_photo">
@@ -114,6 +114,66 @@
                                 <div class="cont_icon_right">
                                     <p class="border rounded border-danger" style="color: var(--bs-white);font-weight: bold;background: rgb(237,36,96,0.8);font-size: 14px;">&nbsp;<i class="fas fa-star"></i>&nbsp;Recommended For You&nbsp;</p>
                                 </div>
+                            </div>
+                            <div class="cont_servings">
+                                <h3>{{ item[4] }}</h3><span>SERVINGS</span>
+                            </div>
+                            <div class="cont_detalles">
+                                <h3>{{ item[1] }}</h3>
+                                <p>{{ item[6] }}</p>
+                            </div>
+                        </div>
+                        <div class="cont_text_ingredients">
+                            <div class="cont_over_hidden">
+                                <div class="cont_tabs">
+                                    <ul class="d-inline-flex flex-fill" style="background: transparent;">
+                                        <li>
+                                            <a href="#">
+                                                <h4>PLACE ORDER</h4>
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="#">
+                                                <h4><b>PRICE: {{ item[2] }}</b></h4>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <div class="cont_text_det_preparation">
+                                    <div class="cont_title_preparation" style="margin-top: 5%;margin-bottom: 0px;">
+                                        <p>Add ons</p>
+                                    </div>
+                                    <div class="cont_info_preparation">
+                                        <p style="font-size: 14px;"><input type="checkbox">&nbsp;Coke&nbsp;<br><br><input type="checkbox">&nbsp;Diet Coke<br><br><input type="checkbox">&nbsp;Diet Coke<br></p>
+                                    </div>
+                                    <div class="cont_text_det_preparation">
+                                        <div class="cont_title_preparation">
+                                            <p>Order Quantity</p>
+                                            <input class="form-control-sm" type="number" value="0" min="0" max="10" step="1">
+                                            {% if userType=='guest' %}
+                                            <button class="btn btn-dark disabled border rounded-pill shadow" type="submit" style="margin-left: 5%;font-size: 14px;background: rgb(237,36,96);">Add to Cart <i class="fa fa-chevron-right"></i></button>
+                                            {% else %}
+                                            <a class="btn btn-dark border rounded-pill shadow" type="link" href="{{ item[1]+'_'+item[2] }}" style="margin-left: 5%;font-size: 14px;background: rgb(237,36,96);">Order Now&nbsp;<i class="fa fa-chevron-right"></i></a>
+                                            {% endif %}
+                                        </div>
+                                        <div class="cont_info_preparation"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+                {% for item in menu %}
+                <div class="cont_principal" style="padding-top: 10%;padding-bottom: 10%;background: transparent;">
+                    <div class="cont_modal cont_modal_active">
+                        <div class="cont_photo">
+                            <div class="cont_img_back"><img src="{{ item[5] }}"></div>
+                            <div class="cont_mins">
+                                <div class="sub_mins">
+                                    <h3>{{ item[3] }}</h3><span>MINS</span>
+                                </div>
+                                <div class="cont_icon_right"></div>
                             </div>
                             <div class="cont_servings">
                                 <h3>{{ item[4] }}</h3><span>SERVINGS</span>
