@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
-    <title>Blog - Brand</title>
+    <title>Dine - flyghtdeck.ai</title>
     <link rel="apple-touch-icon" type="image/jpeg" sizes="180x180" href="static/img/favicon/favicon_180.jpg">
     <link rel="icon" type="image/jpeg" sizes="16x16" href="static/img/favicon/favicon_16.jpg">
     <link rel="icon" type="image/jpeg" sizes="32x32" href="static/img/favicon/favicon_32.jpg">
@@ -36,8 +36,14 @@
 <body>
     <nav class="navbar navbar-light navbar-expand-lg fixed-top bg-white clean-navbar" style="background: var(--bs-white);padding-top: 15px;padding-bottom: 15px;margin-left: -10%;margin-right: -10%;">
         <div class="container">
-            <a class="navbar-brand logo" href="index.html" style="padding: 0px;color: var(--bs-indigo);font-family: Montserrat, sans-serif;">flyghtdeck.ai</a><button data-bs-toggle="collapse" class="navbar-toggler" data-bs-target="#navcol-1"><span class="visually-hidden">Toggle navigation</span><span class="navbar-toggler-icon"></span></button>
+            <a class="navbar-brand logo" href="{{ url_for('index') }}" style="padding: 0px;color: var(--bs-indigo);font-family: Montserrat, sans-serif;">flyghtdeck.ai</a><button data-bs-toggle="collapse" class="navbar-toggler" data-bs-target="#navcol-1"><span class="visually-hidden">Toggle navigation</span><span class="navbar-toggler-icon"></span></button>
+            {% if userType=='admin' %}
+            <div class="collapse navbar-collapse" id="navcol-1" style="padding-top: 1%;margin-top: -5%;margin-bottom: -5%;margin-left: 40%;margin-right: -5%;">
+            {% elif userType=='user' %}
+            <div class="collapse navbar-collapse" id="navcol-1" style="padding-top: 1%;margin-top: -5%;margin-bottom: -5%;margin-left: 25%;margin-right: -10%;">
+            {% else %}
             <div class="collapse navbar-collapse" id="navcol-1" style="padding-top: 1%;margin-top: -5%;margin-bottom: -5%;margin-left: 25%;margin-right: -5%;">
+            {% endif %}
                 <ul class="navbar-nav ms-auto">
                     <li class="nav-item"><a class="nav-link" href="{{ url_for('index') }}">Home</a></li>
                     <li class="nav-item"><a class="nav-link active" href="{{ url_for('shop_and_dine') }}">Shop &amp; Dine</a></li>
@@ -52,12 +58,16 @@
                     {% else %}
                     <li class="nav-item dropdown no-arrow" style="margin-top: -2%;">
                         <div class="nav-item dropdown no-arrow" style="padding: 0px;">
-                            <a class="dropdown-toggle nav-link" aria-expanded="false" data-bs-toggle="dropdown" href="#"><span class="d-none d-lg-inline me-2 text-gray-600 small">Valerie Luna</span><img class="border rounded-circle img-profile" src="static/img/avatars/avatar1.jpeg" style="width: 30%;height: 30%;"></a>
+                            <a class="dropdown-toggle nav-link" aria-expanded="false" data-bs-toggle="dropdown" href="#">
+                                <span class="d-none d-lg-inline me-2 text-gray-600 small">Valerie Luna</span>
+                                <img class="border rounded-circle img-profile" src="static/img/avatars/avatar1.jpeg" style="width: 25%;height: 25%;">
+                            </a>
                             <div class="dropdown-menu shadow dropdown-menu-end animated--grow-in">
                                 {% if userType=='admin' %}
                                 <a class="dropdown-item" href="{{ url_for('dashboard') }}"><i class="fas fa-chevron-right fa-sm fa-fw me-2 text-gray-400"></i>&nbsp;Dashboard</a>
+                                <div class="dropdown-divider"></div>
                                 {% endif %}
-                                <div class="dropdown-divider"></div><a class="dropdown-item" href="{{ url_for('logout') }}"><i class="fas fa-sign-out-alt fa-sm fa-fw me-2 text-gray-400"></i>&nbsp;Logout</a>
+                                <a class="dropdown-item" href="{{ url_for('logout') }}"><i class="fas fa-sign-out-alt fa-sm fa-fw me-2 text-gray-400"></i>&nbsp;Logout</a>
                             </div>
                         </div>
                     </li>
@@ -94,35 +104,39 @@
             <section class="pulse animated" style="padding-bottom: 5%;">
                 <div class="container">
                     <div class="photo-card">
-                        <div data-bss-disabled-mobile="true" data-bss-hover-animate="pulse" class="photo-background" style="background: url(&quot;static/img/haldiram.png&quot;) center no-repeat;margin-left: 1%;"></div>
+                        <div data-bss-disabled-mobile="true" data-bss-hover-animate="pulse" class="photo-background" style="background: url(&quot;{{ restaurants[0][1] }}&quot;) center no-repeat;margin: 1%;"></div>
                         <div class="photo-details">
                             <div class="photo-tags">
                                 <ul>
-                                    <li class="text-uppercase text-center d-xl-flex justify-content-xl-start align-items-xl-center" style="color: var(--bs-purple);">Location&nbsp;&nbsp;<a class="text-capitalize" href="#">Arrival Hall</a></li>
+                                    <li class="text-uppercase text-center d-xl-flex justify-content-xl-start align-items-xl-center" style="color: var(--bs-purple);">Location&nbsp;&nbsp;<a class="text-capitalize" href="#">{{ restaurants[0][3] }}</a></li>
                                 </ul>
-                                <h2 class="text-start" style="color: var(--bs-gray-100);">Haldiram’s<br></h2>
+                                <h2 class="text-start" style="color: var(--bs-gray-100);">{{ restaurants[0][0] }}<br></h2>
                             </div>
-                            <p class="text-start" style="font-size: 12px;">Haldiram’s is about more than just food. By creating a strong sense of community and supporting our associates, we continue to feel like a true family business. We carry these values with us as we operate together to serve generations of happy connoisseurs across the globe and continue to be the nation’s beloved snack-food company<br></p><button class="btn btn-outline-light border rounded-pill" type="submit">Checkout&nbsp;<i class="fa fa-chevron-right"></i></button>
+                            <p class="text-start" style="font-size: 12px;">{{ restaurants[0][2] }}<br></p>
+                            <a href="{{ restaurants[0][4] }}" class="btn btn-outline-light border rounded-pill" type="submit">Checkout&nbsp;<i class="fa fa-chevron-right"></i></a>
                         </div>
                     </div>
                 </div>
             </section>
+            {% for restaurant in restaurants[1:] %}
             <section data-aos="zoom-in-up" data-aos-duration="800" data-aos-once="true" style="padding-bottom: 5%;">
                 <div class="container">
                     <div class="photo-card">
-                        <div data-bss-disabled-mobile="true" data-bss-hover-animate="pulse" class="photo-background" style="background: url(&quot;static/img/baker-street.png&quot;) center / contain no-repeat;margin-left: 1%;"></div>
+                        <div data-bss-disabled-mobile="true" data-bss-hover-animate="pulse" class="photo-background" style="background: url(&quot;{{ restaurant[1] }}&quot;) center / contain no-repeat;margin: 1%;"></div>
                         <div class="photo-details">
                             <div class="photo-tags">
                                 <ul>
-                                    <li class="text-uppercase text-center d-xl-flex justify-content-xl-start align-items-xl-center" style="color: var(--bs-purple);">Location&nbsp;&nbsp;<a class="text-capitalize" href="#">Level 4, Security Area<br></a></li>
+                                    <li class="text-uppercase text-center d-xl-flex justify-content-xl-start align-items-xl-center" style="color: var(--bs-purple);">Location&nbsp;&nbsp;<a class="text-capitalize" href="#">{{ restaurant[3] }}<br></a></li>
                                 </ul>
-                                <h2 class="text-start" style="color: var(--bs-gray-100);">Baker Street</h2>
+                                <h2 class="text-start" style="color: var(--bs-gray-100);">{{ restaurant[0] }}</h2>
                             </div>
-                            <p class="text-start" style="font-size: 12px;">Some things don’t just happen over coffee; you need a lot more than that. Baker Street is a European style bistro café exclusively serving the finest coffees with the aromas of freshly baked goodies wafting through the air. Its legendary pastries with their perfect textures and impeccable presentation have always been the crowd favourite.<br></p><button class="btn btn-outline-light border rounded-pill" type="submit">Checkout&nbsp;<i class="fa fa-chevron-right"></i></button>
+                            <p class="text-start" style="font-size: 12px;">{{ restaurant[2] }}<br></p>
+                            <a href="{{ restaurant[4] }}" class="btn btn-outline-light border rounded-pill" type="submit">Checkout&nbsp;<i class="fa fa-chevron-right"></i></a>
                         </div>
                     </div>
                 </div>
             </section>
+            {% endfor %}
         </section>
     </main>
     <footer class="page-footer dark">
