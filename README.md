@@ -3,31 +3,10 @@
 Repository for Adani's Jack The Hack Hackathon
 
 ![Flyghtdeck.ai Logo](flyghtdeck-banner.png)
-## Installation
-
-Use the package manager [pip](https://pip.pypa.io/en/stable/) to install foobar.
-
-```bash
-pip install -r requirements.txt
-```
-
-## Usage
-
-```python
-
-```
-
-## Contributing
-Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
-
-Please make sure to update tests as appropriate.
-
-## License
-[MIT](https://choosealicense.com/licenses/mit/)
 
 ## Installation
 
-Use the package manager [pip](https://pip.pypa.io/en/stable/) to install foobar.
+Use the package manager [pip](https://pip.pypa.io/en/stable/) to install required packages.
 
 ```bash
 pip install -r requirements.txt
@@ -36,7 +15,7 @@ pip install -r requirements.txt
 ## Usage
 
 ```
-python
+python app.py
 ```
 
 ## Contributing
