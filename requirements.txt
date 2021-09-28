@@ -28,10 +28,12 @@ pytz==2021.1
 requests==2.25.1
 scikit-learn==0.24.1
 scipy==1.6.1
+seaborn==0.11.1
 six==1.16.0
 sklearn==0.0
 soupsieve==2.2.1
 stocknotebridge==1.0.1
+tensorflow==2.6.0
 threadpoolctl==2.1.0
 urllib3==1.26.4
 websocket==0.2.1

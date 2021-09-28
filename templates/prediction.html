@@ -56,15 +56,20 @@
                     <li class="nav-item"><a class="nav-link" href="{{ url_for('login') }}">Login</a></li>
                     <li class="nav-item"><a class="nav-link" href="{{ url_for('signup') }}" style="font-family: var(--bs-body-font-family);">Register</a></li>
                     {% else %}
-                    <li class="nav-item dropdown no-arrow" style="margin-top: -2%;">
+                    <li class="nav-item dropdown no-arrow active" style="margin-top: -2%;">
                         <div class="nav-item dropdown no-arrow" style="padding: 0px;">
                             <a class="dropdown-toggle nav-link" aria-expanded="false" data-bs-toggle="dropdown" href="#">
+                                {% if userType=='admin' %}
+                                <span class="d-none d-lg-inline me-2 text-gray-600 small">Administrator</span>
+                                {% else %}
                                 <span class="d-none d-lg-inline me-2 text-gray-600 small">Valerie Luna</span>
+                                {% endif %}
                                 <img class="border rounded-circle img-profile" src="static/img/avatars/avatar1.jpeg" style="width: 25%;height: 25%;">
                             </a>
                             <div class="dropdown-menu shadow dropdown-menu-end animated--grow-in">
                                 {% if userType=='admin' %}
                                 <a class="dropdown-item" href="{{ url_for('dashboard') }}"><i class="fas fa-chevron-right fa-sm fa-fw me-2 text-gray-400"></i>&nbsp;Dashboard</a>
+                                <a class="dropdown-item" href="{{ url_for('prediction') }}"><i class="fas fa-chevron-right fa-sm fa-fw me-2 text-gray-400"></i>&nbsp;Threat Detection</a>
                                 <div class="dropdown-divider"></div>
                                 {% endif %}
                                 <a class="dropdown-item" href="{{ url_for('logout') }}"><i class="fas fa-sign-out-alt fa-sm fa-fw me-2 text-gray-400"></i>&nbsp;Logout</a>
@@ -98,22 +103,38 @@
         <section class="clean-block clean-cart dark">
             <div class="container">
                 <div class="block-heading" style="padding-top: 10%;">
-                    <form action="upload.php" method="POST" style="position: absolute; top: 50%; left: 50%; margin-top: -100px; margin-left: -250px; width: 500px; height: 200px; border: 4px dashed #fff;">
-                        <input type="file" multiple style="position: absolute; margin: 0; padding: 0; width: 100%; height: 100%; outline: none; opacity: 0;">
-                        <p style="width: 100%; height: 100%; text-align: center; line-height: 170px; color: #ffffff; font-family: Arial;">
-                            Drag your files here or click in this area.
-                        </p>
-                        <button type="submit" style="margin: 0; color: #fff; background: #16a085; border: none; width: 508px; height: 35px; margin-top: -20px; margin-left: -4px; border-radius: 4px; border-bottom: 4px solid #117A60; transition: all .2s ease; outline: none;">
-                            Upload
-                        </button>
-                    </form>
-                    <script>
-                        $(document).ready(function () {
-                            $('form input').change(function () {
-                                $('form p').text(this.files.length + " file(s) selected");
-                            });
-                        });
-                    </script>
+                    {% if img_path %}
+                    <div class="container">
+                        <div class="photo-card">
+                            <div class="photo-background"">
+                                <img src="{{ img_path }}" width="100%" height="100%" />
+                            </div>
+                            <div class="photo-details">
+                                <h1>Prediction</h1>
+                                <div class="d-flex d-xl-flex justify-content-xl-center align-items-xl-center photo-tags" style="margin-top: 10%;">
+                                    <ul style="margin-top: 4.9px;">
+                                        <li class="text-uppercase text-light" style="margin-right: 30px;">dangerous<a href="#">{{ (100-predicted) |round(5) }}%</a></li>
+                                        <li class="text-uppercase text-light">not dangerous<a href="#">{{ predicted |round(5) }}%</a></li>
+                                    </ul>
+                                </div><a href="{{ url_for('prediction') }}" class="btn btn-dark border rounded-pill border-dark" role="link" style="margin-top: 10%;">Predict More <i class="fas fa-arrow-right"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                    {% else %}
+                    <div class="d-inline-block">
+                        <div>
+                            <form action="{{ url_for('uploader') }}" method="POST" enctype="multipart/form-data">
+                                <label for="file">UPLOAD LUGGAGE's X-RAY IMAGE</label>
+                                <input type="file" name="file" class="border rounded-pill border-dark" accept="image/*" style="margin-top: 24px;" />
+                                <div>
+                                    <button class="btn btn-primary btn-sm btn-xl rounded-pill" type="submit" style="width: 40%;height: 1%;margin-left: 5%;padding-top: 2%;padding-bottom: 2%;padding-right: 1%;padding-left: 1%;margin-top: 5%;">
+                                        UPLOAD<i class="fa fa-angle-double-right"></i>
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                    {% endif %}
                 </div>
             </div>
         </section>

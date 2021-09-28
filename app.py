@@ -3,7 +3,7 @@ from flask import Flask, request, redirect, render_template
 from multi_city import HandleCity
 from recommendation import RecommendationEngine
 from extract_keys import Extractor
-#from model import Model
+from model import Model
 
 
 userType = 'guest'          # guest / user / admin
@@ -21,7 +21,12 @@ app = Flask(__name__)
 city_handler = HandleCity(city)
 recommender = RecommendationEngine()
 extractor = Extractor()
-#model = Model()
+model = Model()
+
+UPLOAD_FOLDER = os.path.join('static', 'img', 'uploads')
+ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg'}
+app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
+
 corpus = extractor.clean()
 extractor.set_city(city)
 corpus = extractor.clean()
@@ -285,8 +290,20 @@ def pay_successful():
     return render_template('pay-successful.html', userType=userType, city=city)
 
 @app.route('/prediction')
-def prediction():
-    return render_template('prediction.html', userType=userType, city=city)
+def prediction(img_path=None, predicted=None):
+
+    return render_template('prediction.html', userType=userType, city=city, img_path=img_path, predicted=predicted)
+
+@app.route('/uploader', methods = ['GET', 'POST'])
+def uploader():
+    if request.method == 'POST':
+        f = request.files['file']
+        img_path = os.path.join(os.getcwd(), app.config['UPLOAD_FOLDER'], f.filename)
+        f.save(img_path)
+        predicted = round(model.predict(img_path), 5)
+        img_path = 'static\\img\\uploads\\'+f.filename
+        return prediction(img_path, predicted)
+
 
 
 if __name__ == '__main__':
