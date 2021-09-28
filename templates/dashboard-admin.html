@@ -104,6 +104,7 @@
             </div>
             <h2 class="text-info" style="margin-bottom: 2%;">Suspicion Reports</h2>
             <div>
+                
                 <section class="border rounded shadow d-xl-flex justify-content-xl-center align-items-xl-center" style="background: var(--bs-gray-800);margin-right: 25%;margin-left: 25%;color: var(--bs-pink);margin-bottom: 3%;">
                     <div class="d-inline-flex d-xl-flex justify-content-center align-items-center align-content-center align-self-center align-items-xl-center clean-block add-on call-to-action" style="padding-top: 2%;padding-bottom: 1%;width: 100%;height: 100%;">
                         <figure style="margin: 0px;width: 80%;">
@@ -114,6 +115,7 @@
                         </figure>
                     </div>
                 </section>
+
                 <section class="border rounded shadow d-xl-flex justify-content-xl-center align-items-xl-center" style="background: var(--bs-gray-800);margin-right: 25%;margin-left: 25%;color: var(--bs-pink);margin-bottom: 3%;">
                     <div class="d-inline-flex d-xl-flex justify-content-center align-items-center align-content-center align-self-center align-items-xl-center clean-block add-on call-to-action" style="padding-top: 2%;padding-bottom: 1%;width: 100%;height: 100%;">
                         <figure style="margin: 0px;width: 80%;">
@@ -124,6 +126,7 @@
                         </figure>
                     </div>
                 </section>
+
             </div>
             <section>
                 <h2 class="text-info" style="margin-bottom: 0px;margin-top: 5%;">Flight Delay Prediction</h2>
@@ -181,13 +184,64 @@
                 <h2 class="text-info" style="margin-bottom: 0px;margin-top: 5%;">Feedback Responses</h2>
                 <div class="border rounded shadow-lg" style="background: var(--bs-white);padding: 2%;margin-top: 2%;">
                     <div class="text-start">
-                        <div class="dropdown d-xl-flex justify-content-xl-end"><button class="btn btn-primary dropdown-toggle border rounded-pill" aria-expanded="false" data-bs-toggle="dropdown" type="button" style="background: var(--bs-gray-800);color: var(--bs-white);">Change Duration&nbsp;</button>
-                            <div class="dropdown-menu"><a class="dropdown-item" href="#">Today</a><a class="dropdown-item" href="#">This Week</a><a class="dropdown-item" href="#">This Month</a></div>
-                        </div><span style="padding-left: 3%;color: var(--bs-gray-900);font-size: 18px;">Most of the responses are about:&nbsp;</span>
+                        <div class="dropdown d-xl-flex justify-content-xl-end">
+                            <button class="btn btn-primary dropdown-toggle border rounded-pill" aria-expanded="false" data-bs-toggle="dropdown" type="button" style="background: var(--bs-gray-800);color: var(--bs-white);">Change Duration&nbsp;</button>
+                            <div class="dropdown-menu disabled">
+                                <a class="dropdown-item disabled" href="{{ url_for('today') }}">Today</a>
+                                <a class="dropdown-item disabled" href="{{ url_for('week') }}">This Week</a>
+                                <a class="dropdown-item" href="#">This Month</a>
+                            </div>
+                        </div>
+                        <span style="padding-left: 3%;color: var(--bs-gray-900);font-size: 18px;">Most of the responses are about:&nbsp;</span>
                     </div>
-                    <div style="font-weight: bold;">
-                        <p class="text-center" style="padding-right: 3%;padding-left: 3%;padding-top: 2%;"><span class="text-center" style="color: #d30273;font-size: 24px;">Bad,&nbsp;</span><span class="text-center" style="color: #d31286;font-size: 24px;">Washroom,&nbsp;</span><span class="text-center" style="color: #f61eac;font-size: 24px;">Hall,&nbsp;</span><span class="text-center" style="color: #f43fa5;font-size: 24px;">kfc,&nbsp;</span><span class="text-center" style="color: #f46baf;font-size: 24px;">elevator</span></p>
-                        <p class="text-center" style="padding-right: 3%;padding-left: 3%;"><span class="text-center" style="color: #d30273;font-size: 24px;">Bad,&nbsp;</span><span class="text-center" style="color: #d31286;font-size: 24px;">Washroom,&nbsp;</span><span class="text-center" style="color: #f61eac;font-size: 24px;">Hall,&nbsp;</span><span class="text-center" style="color: #f43fa5;font-size: 24px;">kfc,&nbsp;</span><span class="text-center" style="color: #f46baf;font-size: 24px;">elevator</span></p>
+                    <div>
+                        <p class="text-center" style="padding-right: 3%;padding-left: 3%;padding-top: 2%;">
+                            <span class="text-center" style="color: #d30273;font-size: 24px;">{{ uni[0][0] }},&nbsp;</span>
+                            <span class="text-center" style="color: #d31286;font-size: 24px;">{{ uni[1][0] }},&nbsp;</span>
+                            <span class="text-center" style="color: #f61eac;font-size: 24px;">{{ uni[2][0] }},&nbsp;</span>
+                            <span class="text-center" style="color: #f43fa5;font-size: 24px;">{{ uni[3][0] }},&nbsp;</span>
+                            <span class="text-center" style="color: #f46baf;font-size: 24px;">{{ uni[4][0] }}</span>
+                        </p>
+                        <p class="text-center" style="padding-right: 3%;padding-left: 3%;padding-top: 2%;">
+                            <span class="text-center" style="color: #d30273;font-size: 24px;">{{ bi[0][0] }},&nbsp;</span>
+                            <span class="text-center" style="color: #d31286;font-size: 24px;">{{ bi[1][0] }},&nbsp;</span>
+                            <span class="text-center" style="color: #f61eac;font-size: 24px;">{{ bi[2][0] }},&nbsp;</span>
+                            <span class="text-center" style="color: #f43fa5;font-size: 24px;">{{ bi[3][0] }},&nbsp;</span>
+                            <span class="text-center" style="color: #f46baf;font-size: 24px;">{{ bi[4][0] }}</span>
+                        </p>
+                        <p class="text-center" style="padding-right: 3%;padding-left: 3%;padding-top: 2%;">
+                            <span class="text-center" style="color: #d30273;font-size: 24px;">{{ tri[0][0] }},&nbsp;</span>
+                            <span class="text-center" style="color: #d31286;font-size: 24px;">{{ tri[1][0] }},&nbsp;</span>
+                            <span class="text-center" style="color: #f61eac;font-size: 24px;">{{ tri[2][0] }},&nbsp;</span>
+                            <span class="text-center" style="color: #f43fa5;font-size: 24px;">{{ tri[3][0] }},&nbsp;</span>
+                            <span class="text-center" style="color: #f46baf;font-size: 24px;">{{ tri[4][0] }}</span>
+                        </p>
+                        <p class="text-center" style="padding-right: 3%;padding-left: 3%;padding-top: 2%;">
+                            <span class="text-center" style="color: #d30273;font-size: 24px;">{{ quad[0][0] }},&nbsp;</span>
+                            <span class="text-center" style="color: #d31286;font-size: 24px;">{{ quad[1][0] }},&nbsp;</span>
+                            <span class="text-center" style="color: #f61eac;font-size: 24px;">{{ quad[2][0] }},&nbsp;</span>
+                            <span class="text-center" style="color: #f43fa5;font-size: 24px;">{{ quad[3][0] }},&nbsp;</span>
+                            <span class="text-center" style="color: #f46baf;font-size: 24px;">{{ quad[4][0] }}</span>
+                        </p>
+                        <div class="shadow card">
+                            <a class="btn btn-dark border-light fw-bold" data-bs-toggle="collapse" aria-expanded="true" aria-controls="collapse-4" href="#collapse-4" role="button" style="color: var(--bs-blue);background: var(--bs-white);text-align: center;width: 25%;">Show Detailed Report <i class="fa fa-chevron-right" style="color: var(--bs-gray-700);"></i><span></span></a>
+                            <div class="collapse" id="collapse-4">
+                                <div class="card-body">
+                                    <section class="photo-gallery">
+                                        <div class="container">
+                                            <div class="intro"></div>
+                                            <div class="row photos" data-bss-baguettebox>
+                                                <div class="col-sm-6 col-md-4 col-lg-3 item" style="width: 40%;"><img class="img-fluid" src="{{ "static\\img\\"+city+"\\feedbacks\\keywords.png" }}" /></div>
+                                                <div class="col-sm-6 col-md-4 col-lg-3 item" style="width: 50%;"><img class="img-fluid" src="{{ "static\\img\\"+city+"\\feedbacks\\bi-gram.png" }}" /></div>
+                                                <div class="col-sm-6 col-md-4 col-lg-3 item" style="width: 50%;"><img class="img-fluid" src="{{ "static\\img\\"+city+"\\feedbacks\\tri-gram.png" }}" /></div>
+                                                <div class="col-sm-6 col-md-4 col-lg-3 item" style="width: 40%;"><img class="img-fluid" src="{{ "static\\img\\"+city+"\\feedbacks\\quad-gram.png" }}" /></div>
+                                            </div>
+                                        </div>
+                                    </section>
+                                    <p class="m-0"></p>
+                                </div>
+                            </div>
+                        </div>                    
                     </div>
                 </div>
             </div>

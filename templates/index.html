@@ -118,13 +118,23 @@
                     <h2 class="text-info" style="color: var(--bs-indigo);">Information Bulletin</h2>
                 </div>
                 <div class="row align-items-center">
-                    <div class="col-md-6" style="border-style: none;"><img class="rounded shadow" data-bss-disabled-mobile="true" data-bss-hover-animate="pulse" src="static/img/covid-19-information.jpg" style="border-style: none;" width="100%"></div>
+                    <div class="col-md-6" style="border-style: none;"><img class="rounded shadow" data-bss-disabled-mobile="true" data-bss-hover-animate="pulse" src="static/img/covid-19-information.jpeg" style="border-style: none;" width="100%"></div>
                     <div class="col-md-6">
                         <h3 style="color: var(--bs-blue);">Covid-19</h3>
                         <div class="getting-started-info">
                             <p>The global COVID-19 pandemic has had a significant impact on the way we live our lives, including how we travel by air.<br></p>
                         </div><a class="btn btn-outline-primary btn-lg border rounded-pill border-primary shadow" role="button">Know More</a>
                     </div>
+                </div>
+                {% if city=='mumbai' %}
+                    {% set lat = 19.07283 %}
+                    {% set lon = 72.88261 %}
+                {% else %}
+                    {% set lat = 28.65381 %}
+                    {% set lon = 77.22897 %}
+                {% endif %}
+                <div style="margin-top: 2%">
+                    <embed style="width: 100%; height: 700px; overflow: hidden; margin-top: 0px;" src="https://www.radarbox24.com/?widget=1&amp;z=3&amp;lat={{ lat }}&amp;lng={{ lon }}" type="text/html" width="300" height="150">
                 </div>
             </div>
         </section>
@@ -168,12 +178,7 @@
             </div>
         </section>
     </main>
-    <script src="https://github.com/Cognigy/WebchatWidget/releases/latest/download/webchat.js"></script>
-    <script>
-        initWebchat(
-            "https://endpoint-trial.cognigy.ai/26db73d9aabd077e27c6f82668952dfe7125dcfc2d5b4ab52704417ce477a4f9"
-        );
-    </script>
+
     <footer class="page-footer dark">
         <div class="container" style="text-align: left;">
             <div class="row" style="margin-left: 0px;margin-right: -5%;">
@@ -215,6 +220,21 @@
             <p style="font-size: 14px;text-align: center;">© 2021 Artficial Mind</p>
         </div>
     </footer>
+
+    <script src="https://github.com/Cognigy/WebchatWidget/releases/latest/download/webchat.js"></script>
+    <script>
+        initWebchat(
+            "https://endpoint-trial.cognigy.ai/26db73d9aabd077e27c6f82668952dfe7125dcfc2d5b4ab52704417ce477a4f9",
+            {
+                settings: {
+                    disableBranding: true,
+                    title: "Flyghtdeck.ai"
+                }
+            }
+        );
+        
+    </script>
+
     <script src="static/bootstrap/js/bootstrap.min.js"></script>
     <script src="static/js/bs-init.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>

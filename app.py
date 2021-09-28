@@ -2,6 +2,8 @@ import os
 from flask import Flask, request, redirect, render_template
 from multi_city import HandleCity
 from recommendation import RecommendationEngine
+from extract_keys import Extractor
+#from model import Model
 
 
 userType = 'guest'          # guest / user / admin
@@ -15,10 +17,18 @@ history = {'test.user1@email.com': [],
            }
 city = 'mumbai'
 
-
 app = Flask(__name__)
 city_handler = HandleCity(city)
 recommender = RecommendationEngine()
+extractor = Extractor()
+#model = Model()
+corpus = extractor.clean()
+extractor.set_city(city)
+corpus = extractor.clean()
+uni = extractor.single_imp(corpus)
+bi = extractor.double_imp(corpus)
+tri = extractor.triple_imp(corpus)
+quad = extractor.four_imp(corpus)
 
 def reset_global():
     global userType
@@ -65,6 +75,8 @@ def login():
         if (email==em and password==pas):
             if email[-12:]=='adaniair.com':
                 userType = 'admin'
+                city = email.split('.')[1].split('@')[0]
+                print(city)
             else:
                 userType = 'user'
             loggedIn = email
@@ -116,9 +128,73 @@ def pay():
 def dashboard():
     global userType
     global city
+    global uni
+    global bi
+    global tri
+    global quad
 
-    return render_template('dashboard-admin.html', userType=userType)
+    if 0:
+        extractor.set_city(city)
+        corpus = extractor.clean()
+        uni = extractor.single_imp(corpus)
+        bi = extractor.double_imp(corpus)
+        tri = extractor.triple_imp(corpus)
+        quad = extractor.four_imp(corpus)
 
+
+    return render_template('dashboard-admin.html', userType=userType, city=city, uni=uni, bi=bi, tri=tri, quad=quad)
+
+@app.route('/today')
+def today():
+    global userType
+    global city
+    global extractor
+
+    corpus = extractor.clean(typ='today')
+    print('>>>')
+    print('enter')
+    print('<<<')
+    uni = extractor.single_imp(corpus, city)
+    print('>>>')
+    print('exit')
+    print('<<<')
+    bi = extractor.double_imp(corpus, city)
+    tri = extractor.triple_imp(corpus, city)
+    quad = extractor.four_imp(corpus, city)
+
+    print(uni, bi, tri, quad)
+
+    return render_template('dashboard-admin.html', userType=userType, city=city, uni=uni, bi=bi, tri=tri, quad=quad)
+
+@app.route('/week')
+def week():
+    global userType
+    global city
+    global extractor
+
+    corpus = extractor.clean(typ='week')
+    uni = extractor.single_imp(corpus, city)
+    bi = extractor.double_imp(corpus, city)
+    tri = extractor.triple_imp(corpus, city)
+    quad = extractor.four_imp(corpus, city)
+
+    return render_template('dashboard-admin.html', userType=userType, city=city, uni=uni, bi=bi, tri=tri, quad=quad)
+
+@app.route('/month')
+def month():
+    global userType
+    global city
+    global extractor
+
+    corpus = extractor.clean(typ='month')
+    uni = extractor.single_imp(corpus, city)
+    bi = extractor.double_imp(corpus, city)
+    tri = extractor.triple_imp(corpus, city)
+    quad = extractor.four_imp(corpus, city)
+
+    print(uni, bi, tri, quad)
+
+    return render_template('dashboard-admin.html', userType=userType, city=city, uni=uni, bi=bi, tri=tri, quad=quad)
 
 def minus(lst1, lst2):
     lst3 = [value for value in lst1 if value not in lst2]
@@ -207,6 +283,11 @@ def buynow(item, price):
 @app.route('/sucess')
 def pay_successful():
     return render_template('pay-successful.html', userType=userType, city=city)
+
+@app.route('/prediction')
+def prediction():
+    return render_template('prediction.html', userType=userType, city=city)
+
 
 if __name__ == '__main__':
     app.run(debug=True)
