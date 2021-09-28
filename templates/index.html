@@ -56,15 +56,20 @@
                             <li class="nav-item"><a class="nav-link" href="{{ url_for('login') }}">Login</a></li>
                             <li class="nav-item"><a class="nav-link" href="{{ url_for('signup') }}" style="font-family: var(--bs-body-font-family);">Register</a></li>
                             {% else %}
-                            <li class="nav-item dropdown no-arrow" style="margin-top: -2%;">
+                            <li class="nav-item dropdown no-arrow active" style="margin-top: -2%;">
                                 <div class="nav-item dropdown no-arrow" style="padding: 0px;">
                                     <a class="dropdown-toggle nav-link" aria-expanded="false" data-bs-toggle="dropdown" href="#">
+                                        {% if userType=='admin' %}
+                                        <span class="d-none d-lg-inline me-2 text-gray-600 small">Administrator</span>
+                                        {% else %}
                                         <span class="d-none d-lg-inline me-2 text-gray-600 small">Valerie Luna</span>
+                                        {% endif %}
                                         <img class="border rounded-circle img-profile" src="static/img/avatars/avatar1.jpeg" style="width: 25%;height: 25%;">
                                     </a>
                                     <div class="dropdown-menu shadow dropdown-menu-end animated--grow-in">
                                         {% if userType=='admin' %}
                                         <a class="dropdown-item" href="{{ url_for('dashboard') }}"><i class="fas fa-chevron-right fa-sm fa-fw me-2 text-gray-400"></i>&nbsp;Dashboard</a>
+                                        <a class="dropdown-item" href="{{ url_for('prediction') }}"><i class="fas fa-chevron-right fa-sm fa-fw me-2 text-gray-400"></i>&nbsp;Threat Detection</a>
                                         <div class="dropdown-divider"></div>
                                         {% endif %}
                                         <a class="dropdown-item" href="{{ url_for('logout') }}"><i class="fas fa-sign-out-alt fa-sm fa-fw me-2 text-gray-400"></i>&nbsp;Logout</a>
@@ -118,13 +123,23 @@
                     <h2 class="text-info" style="color: var(--bs-indigo);">Information Bulletin</h2>
                 </div>
                 <div class="row align-items-center">
-                    <div class="col-md-6" style="border-style: none;"><img class="rounded shadow" data-bss-disabled-mobile="true" data-bss-hover-animate="pulse" src="static/img/covid-19-information.jpg" style="border-style: none;" width="100%"></div>
+                    <div class="col-md-6" style="border-style: none;"><img class="rounded shadow" data-bss-disabled-mobile="true" data-bss-hover-animate="pulse" src="static/img/covid-19-information.jpeg" style="border-style: none;" width="100%"></div>
                     <div class="col-md-6">
                         <h3 style="color: var(--bs-blue);">Covid-19</h3>
                         <div class="getting-started-info">
                             <p>The global COVID-19 pandemic has had a significant impact on the way we live our lives, including how we travel by air.<br></p>
                         </div><a class="btn btn-outline-primary btn-lg border rounded-pill border-primary shadow" role="button">Know More</a>
                     </div>
+                </div>
+                {% if city=='mumbai' %}
+                    {% set lat = 19.07283 %}
+                    {% set lon = 72.88261 %}
+                {% else %}
+                    {% set lat = 28.65381 %}
+                    {% set lon = 77.22897 %}
+                {% endif %}
+                <div style="margin-top: 2%">
+                    <embed style="width: 100%; height: 700px; overflow: hidden; margin-top: 0px;" src="https://www.radarbox24.com/?widget=1&amp;z=3&amp;lat={{ lat }}&amp;lng={{ lon }}" type="text/html" width="300" height="150">
                 </div>
             </div>
         </section>
@@ -168,12 +183,7 @@
             </div>
         </section>
     </main>
-    <script src="https://github.com/Cognigy/WebchatWidget/releases/latest/download/webchat.js"></script>
-    <script>
-        initWebchat(
-            "https://endpoint-trial.cognigy.ai/26db73d9aabd077e27c6f82668952dfe7125dcfc2d5b4ab52704417ce477a4f9"
-        );
-    </script>
+
     <footer class="page-footer dark">
         <div class="container" style="text-align: left;">
             <div class="row" style="margin-left: 0px;margin-right: -5%;">
@@ -215,6 +225,18 @@
             <p style="font-size: 14px;text-align: center;">© 2021 Artficial Mind</p>
         </div>
     </footer>
+    <!-- Start of ChatBot code -->
+    <script type="text/javascript">
+        window.__be = window.__be || {};
+        window.__be.id = "6152bd68928afa0007e863ec";
+        (function() {
+            var be = document.createElement('script'); be.type = 'text/javascript'; be.async = true;
+            be.src = ('https:' == document.location.protocol ? 'https://' : 'http://') + 'cdn.chatbot.com/widget/plugin.js';
+            var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(be, s);
+        })();
+    </script>
+    <!-- End of ChatBot code -->
+
     <script src="static/bootstrap/js/bootstrap.min.js"></script>
     <script src="static/js/bs-init.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>

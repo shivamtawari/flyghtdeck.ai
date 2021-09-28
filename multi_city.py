@@ -28,5 +28,9 @@ class HandleCity:
     
     def get_menu(self, restaurant):
         self.restaurantpic = self.restaurants.loc[self.restaurants.iloc[:,0]==restaurant].values.tolist()[0][1]
-        menu = pd.read_csv(f'static/data/restaurants_{self.city}_menu.csv')
-        return menu.loc[menu.iloc[:, 0]==restaurant].values.tolist()
+        colnames = ['Restaurant', 'Item', 'Price', 'Time', 'Serving', 'ImgPath', 'Desc', 'Rating']
+        self.menu = pd.read_csv(f'static/data/restaurants_{self.city}_menu.csv', names=colnames, header=None)
+        return self.menu.loc[self.menu.iloc[:, 0]==restaurant].values.tolist()
+
+    def get_bestsellers(self, restaurant, num=2):
+        return self.menu.loc[self.menu.iloc[:, 0]==restaurant].sort_values(by='Rating')[-num:].values.tolist()
